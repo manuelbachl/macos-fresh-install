@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#
+# Import neccessary stuff
+#
+source ./spices/globals.sh
+source ./spices/header.sh
+source ./spices/helpers.sh
+source ./spices/helptexts.sh
+
+
+########################################################################################################################
+##### Main application #################################################################################################
+########################################################################################################################
+function cook {
+    #
+    # Import ingredients
+    #
+    source ./herbs/help.sh
+    source ./herbs/prepare.sh
+    source ./herbs/heatUp.sh
+
+    #
+    # Call main function
+    #
+    __main() {
+        pwd=$(pwd)
+        cd ~
+
+        printf ${HEADER}
+
+        case "$1" in
+            system*)
+                __prepare
+                __heatUp
+                ;;
+            prepare*)
+                __prepare
+                ;;
+            help*)
+                __help $1
+                ;;
+            "list")
+                __help "help"
+                ;;
+            *)
+                __help "help"
+                ;;
+        esac
+
+        cd ${pwd}
+    }
+
+    __main $1
+
+    source ./herbs/unsets.sh
+}
